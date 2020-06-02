@@ -1,0 +1,16 @@
+Package: vegpar
+Title: Functions for analyzing VIC vegetation parameters.
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Jacob",
+           family = "Schaperow",
+           role = c("aut", "cre"),
+           email = "jschap@g.ucla.edu")
+Description: This is an R package for analyzing vegetation parameters. It was developed in the context of the VICGlobal project, in order to compare LAI values between VICGlobal, the Livneh et al. (2015) parameters, and the Bohn and Vivoni (2019) dataset.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to
+    pick a license
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0
+Imports: raster, ncdf4, tools
