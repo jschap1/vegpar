@@ -2,20 +2,21 @@
 
 library(vegpar)
 library(raster)
+library(rgdal)
 
 # Convert vegetation parameters from NetCDF to geotiff -----------------------------------------
 
 # VICGlobal
-# vegpar_name <- "/home/jschap/Documents/Data/VICGlobal/Image/ucrb_params_vicglobal.nc"
-# class.list <- "/media/jschap/PC_PART/HydrologyData/BV2019/igbp_classnames.txt"
-# geotiff.dir <- "/home/jschap/Documents/Data/VICGlobal/Image/Vegetation"
-# clipped.gtiff.dir <- "/home/jschap/Documents/Data/VICGlobal/Image/Vegetation/clipped/"
+vegpar_name <- "/home/jschap/Documents/Data/VICParametersGlobal/VICGlobal/Image/ucrb_params_vicglobal.nc"
+class.list <- "/media/jschap/PC_PART/HydrologyData/BV2019/igbp_classnames.txt"
+geotiff.dir <- "/home/jschap/Documents/Data/VICParametersGlobal/VICGlobal/Image/Vegetation"
+clipped.gtiff.dir <- "/home/jschap/Documents/Data/VICParametersGlobal/VICGlobal/Image/Vegetation/clipped/"
 
 # L2015
-vegpar_name <- "/home/jschap/Documents/Data/VICParametersCONUS/L2013_params.nc"
-class.list <- "/home/jschap/Documents/Data/VICParametersCONUS/umd-nldas_classnames.txt"
-geotiff.dir <- "/home/jschap/Documents/Data/VICParametersCONUS/vegetation"
-clipped.gtiff.dir <- "/home/jschap/Documents/Data/VICParametersCONUS/vegetation/clipped_to_ucrb"
+# vegpar_name <- "/home/jschap/Documents/Data/VICParametersCONUS/L2013_params.nc"
+# class.list <- "/home/jschap/Documents/Data/VICParametersCONUS/umd-nldas_classnames.txt"
+# geotiff.dir <- "/home/jschap/Documents/Data/VICParametersCONUS/vegetation"
+# clipped.gtiff.dir <- "/home/jschap/Documents/Data/VICParametersCONUS/vegetation/clipped_to_ucrb"
 
 # BV2019
 # vegpar_name <- "/media/jschap/PC_PART/HydrologyData/BV2019/params.CONUS_MX.MOD_IGBP.mode.2000_2016.nc"
