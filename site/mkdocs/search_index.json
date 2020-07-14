@@ -1,0 +1,44 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "RoutR\n\n\nRoutR\n is an R package for making input files for the Fortran version of the University of Washington (UW) hydrologic routing model (\nLohmann et al., 1998\n). The Fortran version of the UW routing model can be found \nhere\n. (There is also an updated version called \"\nRVIC\n,\" which has been adapted into Python.) RoutR is a collection of R functions I wrote to make inputs for, and analyze outputs from, the UW routing model.\n\n\nThe UW routing model is a linear routing scheme based on a simplified version of the Saint Venant equations. The model has six required input files and three optional input files. RoutR was designed to assist in creation of these input files.\n\n\nRequired input files\n\n\n\n\nParameter file\n - tells the routing model the names and locations of the different input and output files and the start and end time for the model run. It also tells the routing model where to save output files.\n\n\nFlow direction file\n - describes how water flows from one grid cell to another within the study area. The UW routing model uses a D8 flow direction convention with 1 being north, increasing clockwise.\n\n\nUnit hydrograph file\n - describes the unit hydrograph. A sample unit hydrograph is provided on the \nVIC 4.2d documentation website\n.\n\n\nStation location file\n - tells the routing model where to calculate streamflow.\n\n\nFraction file\n - determines which grid cells are included in the model run, and allows inclusion of fractions of grid cells.\n\n\nRunoff (forcing) files\n - The forcings for the UW routing model are runoff and baseflow fields (typically outputs from a land surface model, such as VIC).\n\n\n\n\nNote that the UW routing model can be used with the ASCII-formatted outputs from the VIC-5 classic driver, after some small modifications to the VIC output files.\n\n\nOptional input files\n\n\n\n\nVelocity file\n - contains information about the flow velocity\n\n\nxmask file\n - related to the area of a grid cells\n\n\ndiff file\n - flow diffusion file. Contains the flow diffusion parameter.\n\n\n\n\nSee the official \nVIC 4.2d documentation website\n for further details. While RoutR is helpful for creating input files for the UW routing model, users are encouraged to read the official documentation, as well. \n\n\nInstallation\n\n\nRoutR is an R package and can be installed from Github via the R command \ninstall_github\n, from the \ndevtools\n package. Also, the \nraster\n and \nrgdal\n packages are required. \n\n\nlibrary(devtools)\ninstall_github(\"https://github.com/jschap1/routR\")\n\n\n\n\nRecommended software\n\n\n\n\nGRASS GIS - for delineating watersheds and creating the flow direction file\n\n\nFlow Direction Toolkit - for making manual adjustments to the flow direction file",
+            "title": "Home"
+        },
+        {
+            "location": "/#routr",
+            "text": "RoutR  is an R package for making input files for the Fortran version of the University of Washington (UW) hydrologic routing model ( Lohmann et al., 1998 ). The Fortran version of the UW routing model can be found  here . (There is also an updated version called \" RVIC ,\" which has been adapted into Python.) RoutR is a collection of R functions I wrote to make inputs for, and analyze outputs from, the UW routing model.  The UW routing model is a linear routing scheme based on a simplified version of the Saint Venant equations. The model has six required input files and three optional input files. RoutR was designed to assist in creation of these input files.",
+            "title": "RoutR"
+        },
+        {
+            "location": "/#required-input-files",
+            "text": "Parameter file  - tells the routing model the names and locations of the different input and output files and the start and end time for the model run. It also tells the routing model where to save output files.  Flow direction file  - describes how water flows from one grid cell to another within the study area. The UW routing model uses a D8 flow direction convention with 1 being north, increasing clockwise.  Unit hydrograph file  - describes the unit hydrograph. A sample unit hydrograph is provided on the  VIC 4.2d documentation website .  Station location file  - tells the routing model where to calculate streamflow.  Fraction file  - determines which grid cells are included in the model run, and allows inclusion of fractions of grid cells.  Runoff (forcing) files  - The forcings for the UW routing model are runoff and baseflow fields (typically outputs from a land surface model, such as VIC).   Note that the UW routing model can be used with the ASCII-formatted outputs from the VIC-5 classic driver, after some small modifications to the VIC output files.",
+            "title": "Required input files"
+        },
+        {
+            "location": "/#optional-input-files",
+            "text": "Velocity file  - contains information about the flow velocity  xmask file  - related to the area of a grid cells  diff file  - flow diffusion file. Contains the flow diffusion parameter.   See the official  VIC 4.2d documentation website  for further details. While RoutR is helpful for creating input files for the UW routing model, users are encouraged to read the official documentation, as well.",
+            "title": "Optional input files"
+        },
+        {
+            "location": "/#installation",
+            "text": "RoutR is an R package and can be installed from Github via the R command  install_github , from the  devtools  package. Also, the  raster  and  rgdal  packages are required.   library(devtools)\ninstall_github(\"https://github.com/jschap1/routR\")",
+            "title": "Installation"
+        },
+        {
+            "location": "/#recommended-software",
+            "text": "GRASS GIS - for delineating watersheds and creating the flow direction file  Flow Direction Toolkit - for making manual adjustments to the flow direction file",
+            "title": "Recommended software"
+        },
+        {
+            "location": "/contact/",
+            "text": "See \nhttps://jschap1.github.io/",
+            "title": "Contact"
+        },
+        {
+            "location": "/license/",
+            "text": "Copyright 2020 Jacob Schaperow (\"MIT License\")\n\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+            "title": "License"
+        }
+    ]
+}

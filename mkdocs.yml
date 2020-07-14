@@ -1,0 +1,10 @@
+site_name: vegpar
+nav:
+  - Main: index.md
+  - Demo: tutorial.md
+  - Vegetation parameter file: vegpar.md
+  - Vegetation library file: veglib.md
+  - About:
+    - Contact: contact.md
+    - License: license.md
+theme: readthedocs
