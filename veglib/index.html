@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Vegetation library file - vegpar</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Vegetation library file";
+    var mkdocs_page_input_path = "veglib.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> vegpar</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Main</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../tutorial/">Demo</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../vegpar/">Vegetation parameter file</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Vegetation library file</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#stomatal-and-architectural-resistance">Stomatal and architectural resistance</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#defining-snow-free-cells">Defining snow-free cells</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#albedo">Albedo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#leaf-area-index">Leaf-area index</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fractional-canopy-cover">Fractional canopy cover</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">About</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../contact/">Contact</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">vegpar</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Vegetation library file</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="vegetation-library-file">Vegetation library file</h1>
+<p>The vegetation library maps each land cover type to a set of vegetation parameters. I adapted the LDAS vegetation library from Cherkauer (1999) --- I can't find any online documentation for this file, but it is nearly the same as the vegetation library used by Livneh et al. (2013). I updated the old values of monthly LAI, fcanopy, and albedo with values estimated from recent MODIS data products. I set the architectural and minimum stomatal resistance parameters based on literature values. I left the rest of the parameters unmodified.</p>
+<!-- Good, but still need to add details of how the fcanopy, albedo, and LAI data were obtained from the MODIS/GLASS data.  -->
+
+<h2 id="stomatal-and-architectural-resistance">Stomatal and architectural resistance</h2>
+<p>The minimum stomatal resistance (rmin) and the architectural resistance (r0) play a role in how much plant transpiration occurs. Higher resistance means less transpiration. Stomatal resistance is resistance to the release of water through the plant stomata, and architectural resistance is the aerodynamic resistance between the leaves and the canopy top (Ducoudre et al., 1993). Two sets of resistance parameters have been used in past VIC implementations. Nijssen et al. (2001) ran VIC over the entire globe using rmin values adapted from Dorman and Sellers (1989)'s global database of rmin values computed using the Simple Biosphere Model (SiB, Sellers et al., 1986). N2001's r0 values were taken from Ducoudre et al. (1993)'s SECHIBA land surface parameterization. The other set of rmin and r0 parameters are those used in the LDAS vegetation library and in studies such as Livneh et al. (2013). This set of rmin values comes from Mao et al. (2007) and Mao and Cherkaur (2009). I could not find any documentation regarding the r0 values. For VICGlobal, I used the rmin values from SiB (Dorman and Sellers, 1989) and the r0 values from SECHIBA (Ducoudre et al., 1993) as they appear to be the best documented values.</p>
+<h2 id="defining-snow-free-cells">Defining snow-free cells</h2>
+<p>I used the <a href="https://nsidc.org/data/MOD10CM">MODIS MOD10CM</a> snow cover data product to calculate snow-free monthly average LAI, fractional canopy cover, and albedo for each IGBP land cover type for the year 2017. With the exception of the "perennial snow and ice" land cover, the vegetation parameters in the vegetation library are supposed to be for vegetation, not snow-covered vegetation. Therefore, before calculating albedo, fcanopy, and LAI for each land cover class, we need to exclude snow-covered pixels.</p>
+<p>First, I used the MODIS HDF-EOS to Geotiff ConversionTool (HEG) to convert the 2017 MOD10CM snow cover data to Geotiff format, then I used the MODIS QA band to exclude low-quality data from consideration. The 0 values in the QA band are considered good quality, while values like 250 (cloud), 253 (no decision), 254 (water), and 255 (fill) are not good quality. I excluded grid cells with nonzero QA values.</p>
+<pre><code class="r">library(vegpar)
+library(raster)
+
+# Load snow cover data
+snow.names &lt;- list.files(&quot;/hdd/Data/MODIS_snow/geotiffs/&quot;, 
+                         pattern = glob2rx(&quot;*5km.tif&quot;), full.names = TRUE)
+
+qa.names &lt;- list.files(&quot;/hdd/Data/MODIS_snow/geotiffs/&quot;, 
+                       pattern = glob2rx(&quot;*5km0.tif&quot;), full.names = TRUE)
+
+snowcover &lt;- stack(snow.names) 
+qa &lt;- stack(qa.names)
+names(snowcover) &lt;- month.name[1:12]
+names(qa) &lt;- month.name[1:12]
+
+# Remove the no-data values
+snowcover &lt;- reclassify(snowcover, cbind(100, Inf, NA))
+
+# Remove poor quality data using the QA band
+for (j in 1:12)
+{
+  bad.ind &lt;- which(values(qa[[j]])!=0)
+  snowcover[[j]][bad.ind] &lt;- NA
+  print(j) # display progress
+}
+</code></pre>
+
+<p><code>snowcover</code> is a list of rasters containing fractional snow cover in each month.</p>
+<!-- <img alt="fractional snow cover" src="/img/fsca.png" />. -->
+
+<p>Next, I loaded the <a href="https://lpdaac.usgs.gov/products/mcd12c1v006/">MODIS MCD12C1</a> land cover data, and I resampled snow cover to match the resolution of the land cover data, which is already in the correct 1/16 degree coordinate system for VICGlobal.</p>
+<pre><code class="r"># Load land cover data
+cv.names &lt;- list.files(&quot;/hdd/Data/VICParametersGlobal/VICGlobal/Vegetation_Fractions/Resampled_1_16/&quot;, 
+                       pattern = glob2rx(&quot;*.tif&quot;),
+                       full.names = TRUE)
+cv &lt;- stack(cv.names)
+nclass &lt;- nlayers(cv)
+lcnames &lt;- vector(length = nclass)
+temp &lt;- strsplit(names(cv), split = &quot;_fraction&quot;)
+for (ii in 1:nclass)
+{
+  lcnames[[ii]] &lt;- temp[[ii]]  
+}
+names(cv) &lt;- lcnames
+
+# Project to match resolution (1/16) of the land cover data
+snowcover.proj &lt;- projectRaster(snowcover, cv[[1]], 
+                                method = &quot;bilinear&quot;,
+                                progress = &quot;text&quot;,
+                                file = &quot;/home/jschap/Documents/ESSD/data/monthly_snow_cover_2017.tif&quot;)
+</code></pre>
+
+<p><code>snowcover.proj</code> is a raster brick of fractional snow cover data on the VICGlobal grid, with one layer for each month. I used this to create a mask of which pixels are majority snow-covered, as well as a mask of non-snow-covered pixels. I used 90% as the threshold for a pixel to be considered snow covered. I separated the snow masks by hemisphere.</p>
+<pre><code class="r"># Make polygons for the northern and southern hemispheres
+e_nh&lt;- c(-180, 180, 0, 90)
+e_sh&lt;- c(-180, 180, -90, 0)
+nh &lt;- make_spatial_polygon(e_nh)
+sh &lt;- make_spatial_polygon(e_sh)
+
+# Make mask of where the pixels are majority snow-covered
+thres &lt;- 0.9
+snow.maj &lt;- reclassify(snowcover.proj, cbind(thres, Inf, 1), progress = &quot;text&quot;)
+snow.maj &lt;- reclassify(snow.maj, cbind(-Inf, thres, 0), right = FALSE, progress = &quot;text&quot;)
+snow.maj.nh &lt;- crop(snow.maj, nh)
+
+# invert_raster doesn't work well for a raster stack, so using reclassify instead:
+nosnow.maj.nh &lt;- reclassify(snow.maj.nh, cbind(-0.5,0.5,2))
+nosnow.maj.nh &lt;- reclassify(nosnow.maj.nh, cbind(0.5,1.5,0))
+nosnow.maj.nh &lt;- reclassify(nosnow.maj.nh, cbind(1.5,2.5,1))
+</code></pre>
+
+<h2 id="albedo">Albedo</h2>
+<p>After creating raster masks of snow-free area, the next step is to use the albedo and land cover data products to calculate the average snow-free albedo for each land cover class, in each month. I used monthly 0.05 degree broadband albedo data from Dr. Shunlin Liang's research group at UMD. <a href="http://glass.umd.edu/Download.html">Data available here</a></p>
+<p>Load the monthly albedo data, crop it to the northern hemisphere, and apply the snow-free mask to keep only the albedo values for non-snow-covered pixels. </p>
+<pre><code class="r">albedo &lt;- brick(&quot;/home/jschap/Documents/ESSD/codes/Vegetation_Fractions/monthly_average_albedo_2017.grd&quot;)
+albedo &lt;- calc(albedo, fun = function(x) {x/10000}) # scaling factor
+albedo.nh &lt;- crop(albedo, nh)
+albedo.nosnow.nh &lt;- mask(albedo.nh, nosnow.maj.nh, maskvalue = 0, prog = &quot;text&quot;)
+</code></pre>
+
+<p>Create a majority land cover raster than includes all pixels that are majority (at least 90%) a single land cover (not mixed).</p>
+<pre><code class="r">cv.nh &lt;- crop(cv, nh, progress = &quot;text&quot;)
+CVmaj.nh &lt;- majority_raster(cv.nh, 0.9)
+</code></pre>
+
+<p>For each land cover, make a mask of that land cover only, and calculate the average monthly albedo for that land cover type. I fixed albedo at 0.05 for water-covered area.</p>
+<pre><code class="r">
+lc.num &lt;- 1 # repeat for each lc.num = 1, 2, ..., 17
+lcnames[lc.num]
+
+cv.lc &lt;- CVmaj.nh
+cv.lc[CVmaj.nh!=lc.num] &lt;- NA
+cv.lc[!is.na(cv.lc)] &lt;- 1
+
+# Make a map of albedo, but only over the land cover type
+albedo.lc &lt;- mask(albedo.nosnow.nh, cv.lc, prog=&quot;text&quot;)
+
+# Calculate the mean over that land cover type
+mean.albedo.lc.nh &lt;- colMeans(values(albedo.lc), na.rm = TRUE)
+
+# Write out the monthly albedo time series for the current land cover
+write.table(mean.albedo.lc.nh, 
+            file = &quot;/home/jschap/Documents/ESSD/codes/vegpars/albedo.txt&quot;,
+            quote = FALSE, col.names = FALSE, row.names = FALSE)
+
+</code></pre>
+
+<h2 id="leaf-area-index">Leaf-area index</h2>
+<p>The calculations for snow-free LAI and fcanopy are similar to the albedo calculation. I obtained LAI data from <a href="http://glass.umd.edu/Download.html">GLASS</a>. I used the snow-free mask and the majority land cover raster to calculate the average LAI for each land cover class in each month. Here is the code: </p>
+<pre><code class="r"># Load LAI data and crop to northern hemisphere
+lai &lt;- brick(&quot;/home/jschap/Documents/ESSD/codes/Vegetation_Fractions/monthly_average_LAI_2017.grd&quot;)
+lai &lt;- reclassify(lai, cbind(100, Inf, NA), prog=&quot;text&quot;)
+lai &lt;- calc(lai, fun = function(x) {x/10}) # scaling factor
+lai.nh &lt;- crop(lai, nh, prog=&quot;text&quot;)
+
+# Mask out the snow-covered pixels
+lai.nosnow.nh &lt;- mask(lai.nh, nosnow.maj.nh, maskvalue = 0, prog = &quot;text&quot;)
+
+# For each land cover, calculate monthly average LAI
+lc.num &lt;- 1
+lcnames[lc.num]
+
+cv.lc &lt;- CVmaj.nh
+cv.lc[CVmaj.nh!=lc.num] &lt;- NA
+cv.lc[!is.na(cv.lc)] &lt;- 1
+
+# Make a map of LAI, but only over the land cover type
+lai.lc &lt;- mask(lai.nosnow.nh, cv.lc, prog=&quot;text&quot;)
+
+# Calculate the mean over that land cover type
+mean.lai.lc.nh &lt;- colMeans(values(lai.lc), na.rm = TRUE)
+write.table(mean.lai.lc.nh, 
+            file = &quot;/home/jschap/Documents/ESSD/codes/vegpars/LAI.txt&quot;,
+            quote = FALSE, col.names = FALSE, row.names = FALSE)
+
+
+</code></pre>
+
+<p>I set LAI to 0 for water-covered area and snow and ice.</p>
+<h2 id="fractional-canopy-cover">Fractional canopy cover</h2>
+<p>Similar to albedo and LAI. I estimated fcanopy based on <a href="https://earthdata.nasa.gov/">MODIS MCD13C2</a> NDVI using the same technique as Bohn and Vivoni (2019). </p>
+<pre><code class="r"># Load fcanopy data and crop to northern hemisphere
+fcan &lt;- brick(&quot;/home/jschap/Documents/ESSD/codes/Vegetation_Fractions/monthly_average_fcan.grd&quot;)
+fcan.nh &lt;- crop(fcan, nh)
+
+fcan.nosnow.nh &lt;- mask(fcan.nh, nosnow.maj.nh, maskvalue = 0, prog = &quot;text&quot;)
+
+# Repeat for each land cover class = 1..17
+lc.num &lt;- 1
+lcnames[lc.num]
+
+cv.lc &lt;- CVmaj.nh
+cv.lc[CVmaj.nh!=lc.num] &lt;- NA
+cv.lc[!is.na(cv.lc)] &lt;- 1
+plot(cv.lc, main = &quot;LC mask&quot;)
+
+# Make a map of fcan, but only over the land cover type
+fcan.lc &lt;- mask(fcan.nosnow.nh, cv.lc, prog=&quot;text&quot;)
+plot(fcan.lc[[1]], main = lcnames[lc.num])
+
+# Calculate the mean over that land cover type
+mean.fcan.lc.nh &lt;- colMeans(values(fcan.lc), na.rm = TRUE)
+write.table(mean.fcan.lc.nh, 
+            file = &quot;/home/jschap/Documents/ESSD/codes/vegpars/fcan.txt&quot;,
+            quote = FALSE, col.names = FALSE, row.names = FALSE)
+
+</code></pre>
+
+<p>I set fcanopy to 0.001 for water-covered area and snow and ice.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>
+<p>Bohn, T. J., &amp; Vivoni, E. R. (2019). MOD-LSP, MODIS-based parameters for hydrologic modeling of North American land cover change. Scientific Data, 6(1), 144. https://doi.org/10.1038/s41597-019-0150-2</p>
+</li>
+<li>
+<p>Dorman,  J.,  &amp;  Sellers,  P.  J.  (1989).  A  global  climatology  of  albedo,  rough-ness length and stomatal resistance for atmospheric general circulationmodels as represented by the Simple Biosphere Model (SiB).J.  Appl.Meteor.</p>
+</li>
+<li>
+<p>Ducoudre, N. I., Laval, K., &amp; Perrier, A. (1993). SECHIBA, a New Set of Param-eterizations of the Hydrologic Exchanges at the Land-Atmosphere Inter-face within the LMD Atmospheric General Circulation Model.Journalof  Climate,6(2), 248–273. https://doi.org/10.1175/1520- 0442(1993)006〈0248:sansop〉2.0.co;2</p>
+</li>
+<li>
+<p>Livneh, B., Rosenberg, E. A., Lin, C., Nijssen, B., Mishra, V., Andreadis, K. M.,Maurer,  E.  P.,  &amp;  Lettenmaier,  D.  P.  (2013).  A  long-term  hydrologi-cally based dataset of land surface fluxes and states for the contermi-nous United States: Update and extensions.Journal of Climate,26(23),9384–9392. https://doi.org/10.1175/JCLI-D-12-00508.1</p>
+</li>
+<li>
+<p>Mao, D., &amp; Cherkauer, K. A. (2009). Impacts of land-use change on hydrologicresponses  in  the  Great  Lakes  region.Journal  of  Hydrology,374(1-2),71–82. https://doi.org/10.1016/j.jhydrol.2009.06.016</p>
+</li>
+<li>
+<p>Mao, D., Cherkauer, K. A., &amp; Bowling, L. C. (2007). Improved vegetation properties for the estimation of evapotranspiration in the Midwestern UnitedStates., InAsabe annual international meeting</p>
+</li>
+<li>
+<p>Nijssen, B., Schnur, R., &amp; Lettenmaier, D. P. (2001). Global retrospective es-timation  of  soil  moisture  using  the  variable  infiltration  capacity  landsurface  modl,  1980-93.Journal  of  Climate,14(8),  1790–1808.  https ://doi.org/10.1175/1520-0442(2001)014〈1790:GREOSM〉2.0.CO;2</p>
+</li>
+<li>
+<p>Sellers, P. J., Mintz, Y., Sud, Y. C., &amp; Dalcher, A. (1986). A Simple BiosphereModel (SIB) for Use within General Circulation Models.Journal of theAtmospheric  Sciences,43(6), 505–531. https://doi.org/10.1175/1520-0469(1986)043〈0505:ASBMFU〉2.0.CO;2</p>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../contact/" class="btn btn-neutral float-right" title="Contact">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../vegpar/" class="btn btn-neutral" title="Vegetation parameter file"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../vegpar/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../contact/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

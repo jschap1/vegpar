@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Demo - vegpar</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Demo";
+    var mkdocs_page_input_path = "tutorial.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> vegpar</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Main</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Demo</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#converting-vegetation-parameters-from-netcdf-format-to-geotiff">Converting vegetation parameters from NetCDF format to Geotiff</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#clipping-the-vegetation-parameters-to-the-basin-mask">Clipping the vegetation parameters to the basin mask</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#calculating-weighted-average-vegetation-parameters">Calculating weighted-average vegetation parameters</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#compute-seasonal-and-annual-average-maps">Compute seasonal and annual average maps</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#compute-average-over-basin">Compute average over basin</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#save-results">Save results</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../vegpar/">Vegetation parameter file</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../veglib/">Vegetation library file</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">About</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../contact/">Contact</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">vegpar</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Demo</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="vegpar-demo">vegpar demo</h1>
+<p>This tutorial explains how I used vegpar to compare VIC vegetation parameters among different input datasets.</p>
+<!-- Revise this/look at the actual results from the analysis. -->
+
+<!-- This tutorial describes how I created vegetation parameter files for the VIC model.  -->
+
+<h2 id="converting-vegetation-parameters-from-netcdf-format-to-geotiff">Converting vegetation parameters from NetCDF format to Geotiff</h2>
+<p>The latest version of the VIC model (VIC-5, image driver) uses NetCDF files as inputs. While these are easier to work with than the ASCII parameter files used in older version of the VIC model, users might still want to convert to Geotiff format for analysis, this being a very easy file type to work with in R thanks to the <code>raster</code> package.</p>
+<pre><code class="r">library(vegpar)
+
+# Define inputs and outputs
+
+# Name of VIC parameter file
+vegpar &lt;- &quot;/hdd/Data/VICParametersGlobal/VICGlobal/v1.5/Image/ucrb_params_vicglobal.nc&quot;
+
+# File containing list of land cover class names
+class.list &lt;- &quot;/media/jschap/PC_PART/HydrologyData/BV2019/igbp_classnames.txt&quot;
+
+# Directory where geotiffs should be saved
+geotiff.dir &lt;- &quot;/home/jschap/Documents/Data/VICParametersGlobal/VICGlobal/Image/Vegetation&quot;
+
+classname &lt;- read.table(class.list, stringsAsFactors = FALSE)[[1]]
+netcdf2raster(vegpar_name, &quot;LAI&quot;, classname, geotiff.dir)
+netcdf2raster(vegpar_name, &quot;fcanopy&quot;, classname, geotiff.dir)
+netcdf2raster(vegpar_name, &quot;Cv&quot;, classname, geotiff.dir)
+</code></pre>
+
+<h2 id="clipping-the-vegetation-parameters-to-the-basin-mask">Clipping the vegetation parameters to the basin mask</h2>
+<pre><code class="r"># Directory where clipped geotiffs should be saved
+clipped.gtiff.dir &lt;- &quot;/home/jschap/Documents/Data/VICParametersGlobal/VICGlobal/Image/Vegetation/clipped/&quot;
+
+# Basin mask
+ucrb_mask &lt;- raster(&quot;/home/jschap/Documents/ESSD/data/colo_mask.tif&quot;)
+
+system(paste0(&quot;mkdir &quot;, clipped.gtiff.dir))
+subset_vegpar(geotiff.dir, &quot;LAI&quot;, classname, clipped.gtiff.dir, ucrb_mask)
+subset_vegpar(geotiff.dir, &quot;fcanopy&quot;, classname, clipped.gtiff.dir, ucrb_mask)
+subset_vegpar(geotiff.dir, &quot;Cv&quot;, classname, clipped.gtiff.dir, ucrb_mask, nt = 1)
+</code></pre>
+
+<h2 id="calculating-weighted-average-vegetation-parameters">Calculating weighted-average vegetation parameters</h2>
+<pre><code class="r">LAI &lt;- stack_by_time(&quot;LAI&quot;, clipped.gtiff.dir)
+FCAN &lt;- stack_by_time(&quot;fcanopy&quot;, clipped.gtiff.dir)
+
+cvnames &lt;- list.files(clipped.gtiff.dir, pattern = glob2rx(&quot;Cv*.tif&quot;), full.names = TRUE)
+CV &lt;- stack(cvnames)
+
+LAI_wt_avg &lt;- vegpar_wt_avg(LAI, CV)
+fcan_wt_avg &lt;- vegpar_wt_avg(FCAN, CV)
+</code></pre>
+
+<h2 id="compute-seasonal-and-annual-average-maps">Compute seasonal and annual average maps</h2>
+<pre><code class="r">LAI_seasonal_avg &lt;- vegpar_seasonal_avg(LAI_wt_avg)
+fcan_seasonal_avg &lt;- vegpar_seasonal_avg(fcan_wt_avg)
+</code></pre>
+
+<h2 id="compute-average-over-basin">Compute average over basin</h2>
+<pre><code class="r">avg_LAI_tab &lt;- get_basin_avg(LAI_wt_avg)
+avg_fcan_tab &lt;- get_basin_avg(fcan_wt_avg)
+dat &lt;- data.frame(t = 1:12, month = month.name[1:12], LAI = avg_LAI_tab, fcan = avg_fcan_tab)
+</code></pre>
+
+<h2 id="save-results">Save results</h2>
+<pre><code class="r">savedir &lt;- &quot;/home/jschap/Documents/ESSD/vegpar_comparison/BV2019&quot;
+write.table(dat, file = file.path(savedir, &quot;tabulated_data.txt&quot;),
+            row.names = FALSE)
+saveRDS(LAI_seasonal_avg, file = file.path(savedir, &quot;LAI_seasonal_avg.rds&quot;))
+saveRDS(fcan_seasonal_avg, file = file.path(savedir, &quot;fcan_seasonal_avg.rds&quot;)
+    )
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../vegpar/" class="btn btn-neutral float-right" title="Vegetation parameter file">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Main"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../vegpar/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

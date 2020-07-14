@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Vegetation parameter file - vegpar</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Vegetation parameter file";
+    var mkdocs_page_input_path = "vegpar.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> vegpar</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Main</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../tutorial/">Demo</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Vegetation parameter file</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#land-cover-types">Land cover types</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#root-zone-depth-and-root-fractions">Root zone depth and root fractions</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../veglib/">Vegetation library file</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">About</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../contact/">Contact</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">vegpar</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Vegetation parameter file</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="vegetation-parameter-file">Vegetation parameter file</h1>
+<p>The vegetation parameter file defines the fractional cover of each land cover type in each grid cell, as well as the depth of each root zone and the fraction of roots in each root zone. It can also optionally include time-varying leaf-area index (LAI), fractional canopy cover (fcanopy), and albedo, but it is simpler to describe these in the vegetation library file.</p>
+<h2 id="land-cover-types">Land cover types</h2>
+<p>I used MODIS land cover data from the <a href="https://lpdaac.usgs.gov/products/mcd12c1v006/">0.05° MODIS MCD12C1 Version 6 data product</a> to assign a land cover type to each grid cell. MCD12C1 contains percent cover of each land cover class for three different land cover classification systems. I chose to use the IGBP LC classifications. </p>
+<p>While MCD12C1 observations are available from 2000-present, I chose to use observations from 2017 only because it was the most recent year with data in all of the MODIS-based datasets used for this study. I computed average values over all MODIS observations for the year. A future update to VICGlobal could incorporate multi-year vegetation climatology.</p>
+<ol>
+<li>Download MODIS data in hdf format. The data are annual average percent cover of each of 17 different IGBP land covers. </li>
+<li>Use nearest neighbor interpolation to resample the land cover data to 1/16 degree resolution.</li>
+<li>Write out Geotiff files with percent land cover data for each land cover class.</li>
+</ol>
+<h2 id="root-zone-depth-and-root-fractions">Root zone depth and root fractions</h2>
+<p>I calculated root fraction as a function of land cover class following the method of <a href="https://journals.ametsoc.org/jhm/article/2/5/525/4965/Global-Vegetation-Root-Distribution-for-Land">Zeng (2001)</a>, who used a formula to calculate the root distribution vs. depth as a function of empirical parameters defined for each IGBP land cover type. Maximum root depths for each land cover type were taken from literature.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../veglib/" class="btn btn-neutral float-right" title="Vegetation library file">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../tutorial/" class="btn btn-neutral" title="Demo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../tutorial/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../veglib/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
