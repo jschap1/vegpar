@@ -7,24 +7,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="None">
   
-  <link rel="shortcut icon" href="./img/favicon.ico">
-  <title>Home - vegpar</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>vegpar</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="./css/highlight.css">
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Home";
+    var mkdocs_page_name = "Main";
     var mkdocs_page_input_path = "index.md";
-    var mkdocs_page_url = "/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="./js/jquery-2.1.1.min.js"></script>
-  <script src="./js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="./js/highlight.pack.js"></script> 
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -34,55 +36,44 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href="." class="icon icon-home"> vegpar</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1 current">
-		
-    <a class="current" href=".">Home</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#routr">RoutR</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#required-input-files">Required input files</a></li>
-        
-            <li><a class="toctree-l3" href="#optional-input-files">Optional input files</a></li>
-        
-            <li><a class="toctree-l3" href="#installation">Installation</a></li>
-        
-            <li><a class="toctree-l3" href="#recommended-software">Recommended software</a></li>
-        
-        </ul>
-    
-
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">Main</a>
+    <ul class="current">
     </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="contact/">Contact</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="license/">License</a>
-	    </li>
-          
-        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="tutorial/">Demo</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="vegpar/">Vegetation parameter file</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="veglib/">Vegetation library file</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">About</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="contact/">Contact</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="license/">License</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -102,65 +93,21 @@
     
       
     
-    <li>Home</li>
+    <li>Main</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
   </ul>
+  
   <hr/>
 </div>
           <div role="main">
             <div class="section">
               
-                <h1 id="routr">RoutR</h1>
-<p><a href="https://github.com/jschap1/routR">RoutR</a> is an R package for making input files for the Fortran version of the University of Washington (UW) hydrologic routing model (<a href="https://www.tandfonline.com/doi/abs/10.1080/02626669809492107">Lohmann et al., 1998</a>). The Fortran version of the UW routing model can be found <a href="https://github.com/UW-Hydro/VIC_Routing">here</a>. (There is also an updated version called "<a href="https://github.com/UW-Hydro/RVIC">RVIC</a>," which has been adapted into Python.) RoutR is a collection of R functions I wrote to make inputs for, and analyze outputs from, the UW routing model.</p>
-<p>The UW routing model is a linear routing scheme based on a simplified version of the Saint Venant equations. The model has six required input files and three optional input files. RoutR was designed to assist in creation of these input files.</p>
-<h3 id="required-input-files">Required input files</h3>
-<ul>
-<li><b>Parameter file</b> - tells the routing model the names and locations of the different input and output files and the start and end time for the model run. It also tells the routing model where to save output files.</li>
-<li><strong>Flow direction file</strong> - describes how water flows from one grid cell to another within the study area. The UW routing model uses a D8 flow direction convention with 1 being north, increasing clockwise.</li>
-<li><strong>Unit hydrograph file</strong> - describes the unit hydrograph. A sample unit hydrograph is provided on the <a href="https://vic.readthedocs.io/en/vic.4.2.d/Documentation/Routing/RoutingInput/">VIC 4.2d documentation website</a>.</li>
-<li><strong>Station location file</strong> - tells the routing model where to calculate streamflow.</li>
-<li><strong>Fraction file</strong> - determines which grid cells are included in the model run, and allows inclusion of fractions of grid cells.</li>
-<li><strong>Runoff (forcing) files</strong> - The forcings for the UW routing model are runoff and baseflow fields (typically outputs from a land surface model, such as VIC).</li>
-</ul>
-<p>Note that the UW routing model can be used with the ASCII-formatted outputs from the VIC-5 classic driver, after some small modifications to the VIC output files.</p>
-<h3 id="optional-input-files">Optional input files</h3>
-<ul>
-<li><strong>Velocity file</strong> - contains information about the flow velocity</li>
-<li><strong>xmask file</strong> - related to the area of a grid cells</li>
-<li><strong>diff file</strong> - flow diffusion file. Contains the flow diffusion parameter.</li>
-</ul>
-<p>See the official <a href="https://vic.readthedocs.io/en/vic.4.2.d/Documentation/Routing/RoutingInput/">VIC 4.2d documentation website</a> for further details. While RoutR is helpful for creating input files for the UW routing model, users are encouraged to read the official documentation, as well. </p>
-<h2 id="installation">Installation</h2>
-<p>RoutR is an R package and can be installed from Github via the R command <code>install_github</code>, from the <code>devtools</code> package. Also, the <code>raster</code> and <code>rgdal</code> packages are required. </p>
-<pre><code class="r">library(devtools)
-install_github(&quot;https://github.com/jschap1/routR&quot;)
-</code></pre>
-
-<h2 id="recommended-software">Recommended software</h2>
-<ul>
-<li>GRASS GIS - for delineating watersheds and creating the flow direction file</li>
-<li>Flow Direction Toolkit - for making manual adjustments to the flow direction file</li>
-</ul>
-<!-- Help: 
-https://www.mkdocs.org/
-https://www.mkdocs.org/user-guide/deploying-your-docs/
+                <h1 id="vegpar">vegpar</h1>
+<p>I created the <a href="https://github.com/jschap1/vegpar">vegpar</a> R package to work with vegetation parameters for the VIC model. I used it to compare VIC parameters among different VIC input datasets.</p>
+<!-- create global inputs to the Variable Infiltration Capacity land surface model. 
  -->
-
-<!-- ## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files. -->
               
             </div>
           </div>
@@ -168,7 +115,7 @@ https://www.mkdocs.org/user-guide/deploying-your-docs/
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="contact/" class="btn btn-neutral float-right" title="Contact">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="tutorial/" class="btn btn-neutral float-right" title="Demo">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
     </div>
@@ -181,31 +128,38 @@ https://www.mkdocs.org/user-guide/deploying-your-docs/
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-	  
+      
         </div>
       </div>
 
     </section>
-    
+
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
       
-        <span style="margin-left: 15px"><a href="contact/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="tutorial/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
-    <script src="./js/theme.js"></script>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>
 
 <!--
-MkDocs version : 0.16.3
-Build Date UTC : 2020-07-13 13:23:38
+MkDocs version : 1.1.2
+Build Date UTC : 2020-07-14 17:51:36.828023+00:00
 -->
